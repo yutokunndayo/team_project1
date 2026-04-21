@@ -1,5 +1,43 @@
 <?php 
+  session_start();
+  require_once "conn.php";
 
+ 
+// ログインボタンを押したとき
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $email = trim($_POST["email"]);
+    $password = trim($_POST["password"]);
+ 
+    // 入力チェック
+    if (empty($email) || empty($password)) {
+        $error = "メールアドレスとパスワードを入力してください。";
+    } else {
+        // ユーザー検索
+        $sql = "SELECT id, name, email, password FROM register WHERE email = ?";
+
+        // プリペアドステートメント
+        $stmt = mysqli_prepare($conn, $sql);
+        mysqli_stmt_bind_param($stmt, "s", $email);
+        mysqli_stmt_execute($stmt);
+
+        // 結果取得
+        $result = mysqli_stmt_get_result($stmt);
+        $user = mysqli_fetch_assoc($result);
+ 
+        if ($user && password_verify($password, $user["password"])) {
+            // ログイン成功 → セッションに保存
+            $_SESSION["id"] = $user["id"];
+            $_SESSION["name"] = $user["name"];
+ 
+            // プロフィールページへ
+            header("Location: report.php");
+            exit();
+        } else {
+            // ログイン失敗
+            $error = "メールアドレスまたはパスワードが正しくありません。";
+        }
+    }
+}
 
 ?>
 <!DOCTYPE html>
@@ -16,8 +54,8 @@
     <p>ABC 安全確認サイトへ...</p>
     <form action="login.php" method="POST">
       <div class="form-group">
-        <label for="idnum">社員番号</label>
-        <input type="text" id="idnum" name="idnum" placeholder="あなたの社員番号" required>
+        <label for="email">メールアドレス</label>
+        <input type="email" id="email" name="email" placeholder="あなたのメールアドレス" required>
       </div>
       <div class="form-group">
         <label for="password">パスワード</label>
@@ -25,6 +63,7 @@
       </div>
       <button type="submit" class="login-btn">ログイン</button>
     </form>
+    <?php if (isset($error)) echo $error; ?>
     <div><a href="email.php">Forget Password</a></div>
       
     </div>
