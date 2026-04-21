@@ -13,30 +13,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error = "メールアドレスとパスワードを入力してください。";
     } else {
         // ユーザー検索
-        $sql = "SELECT id, name, email, password FROM register WHERE email = ?";
+        $sql = "SELECT id, name, email, password FROM register WHERE email = ? LIMIT 1";
 
         // プリペアドステートメント
         $stmt = mysqli_prepare($conn, $sql);
-        mysqli_stmt_bind_param($stmt, "s", $email);
-        mysqli_stmt_execute($stmt);
 
-        // 結果取得
-        $result = mysqli_stmt_get_result($stmt);
-        $user = mysqli_fetch_assoc($result);
+
+        if ($stmt) {
+      mysqli_stmt_bind_param($stmt, "s", $email);
+      mysqli_stmt_execute($stmt);
+      $result = mysqli_stmt_get_result($stmt);
+      $user = mysqli_fetch_assoc($result);
+      mysqli_stmt_close($stmt);
  
-        if ($user && password_verify($password, $user["password"])) {
-            // ログイン成功 → セッションに保存
-            $_SESSION["id"] = $user["id"];
-            $_SESSION["name"] = $user["name"];
+      $isValidPassword = false;
+      if ($user) {
  
-            // プロフィールページへ
-            header("Location: report.php");
-            exit();
-        } else {
-            // ログイン失敗
-            $error = "メールアドレスまたはパスワードが正しくありません。";
-        }
+        $storedPassword = (string) $user["password"];
+        $isValidPassword = ($password === $storedPassword) || password_verify($password, $storedPassword);
+      }
+ 
+      if ($isValidPassword) {
+        $_SESSION["id"] = $user["id"];
+        $_SESSION["name"] = $user["name"];
+        header("Location: report.php");
+        exit();
+      }
+ 
+      $error = "メールアドレスまたはパスワードが正しくありません。";
+    } else {
+      $error = "ログイン処理に失敗しました。もう一度お試しください。";
     }
+  }
 }
 
 ?>
