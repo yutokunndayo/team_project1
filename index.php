@@ -85,7 +85,7 @@ if ($result) {
                 <nav class="nav nav-pills flex-column gap-2 mb-4">
                     <a href="index.php" class="nav-link active"><i class="bi bi-grid-1x2-fill me-2"></i>ダッシュボード</a>
                     <a href="#" class="nav-link"><i class="bi bi-people-fill me-2"></i>社員管理</a>
-                    <a href="report.php" class="nav-link"><i class="bi bi-shield-check me-2"></i>安否報告</a>
+                    <a href="report_detail.php" class="nav-link"><i class="bi bi-shield-check me-2"></i>安否報告</a>
                     <a href="#" class="nav-link"><i class="bi bi-gear-fill me-2"></i>設定</a>
                 </nav>
 

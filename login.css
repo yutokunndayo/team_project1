@@ -82,5 +82,16 @@ body {
   transform: scale(1.02);
 }
 
+.success-message {
+  margin: 0 0 18px;
+  padding: 10px 12px;
+  border: 1px solid #b7e3c2;
+  border-radius: 10px;
+  background: #effaf2;
+  color: #1f6b33;
+  font-size: 14px;
+  text-align: left;
+}
+
 
 
