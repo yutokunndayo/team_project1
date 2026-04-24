@@ -74,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <button type="submit" class="login-btn">ログイン</button>
         </form>
         <?php if (isset($error)) echo $error; ?>
-        <div><a href="email.php">Forget Password</a></div>
+        <div><a href="forgot_password.php">Forgot Password</a></div>
 
     </div>
     </div>

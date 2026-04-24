@@ -107,6 +107,9 @@ if ($result) {
                         <a href="index.php" class="btn btn-outline-secondary">
                             <i class="bi bi-house-door me-1"></i>ダッシュボード
                         </a>
+                        <a href="logout.php" class="btn btn-outline-danger">
+                            <i class="bi bi-box-arrow-right me-1"></i>ログアウト
+                        </a>
                     </div>
                 </div>
 
