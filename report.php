@@ -59,7 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->bind_param('issss', $empNo, $form['name'], $form['deployment'], $form['comment'], $form['data']);
             if ($stmt->execute()) {
                 $_SESSION['flash_message'] = '安否報告を登録しました。';
-                header('Location: login.php');
+                header('Location: report_list.php');
                 exit;
             } else {
                 $errors[] = '保存に失敗しました。時間をおいて再度お試しください。';
