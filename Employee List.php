@@ -1,6 +1,8 @@
 <?php
 require_once 'conn.php';
 
+
+
 function h($value)
 {
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
@@ -100,7 +102,8 @@ if ($result) {
                                             <th>電話</th>
                                             <th>部署</th>
                                             <th>役職</th>
-                                            <th>権限</th>
+                                            <th>　権限</th>
+                                            <th>　詳細</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -113,6 +116,7 @@ if ($result) {
                                                     <td><?php echo h($employee['phone']); ?></td>
                                                     <td><?php echo h($employee['deployment']); ?></td>
                                                     <td><?php echo h($employee['position']); ?></td>
+                                                 
                                                     <td>
                                                         <?php if ((int) $employee['is_admin'] === 1): ?>
                                                             <span class="badge rounded-pill text-bg-danger">管理者</span>
@@ -120,6 +124,10 @@ if ($result) {
                                                             <span class="badge rounded-pill text-bg-secondary">一般</span>
                                                         <?php endif; ?>
                                                     </td>
+
+                                                     <td>  <td><a class="btn btn-primary" href="Employee.php?id<?= htmlspecialchars($employee['id'] ?? '') ?>">詳細</a></td>
+                                   
+                                                          </td> 
                                                 </tr>
                                             <?php endforeach; ?>
                                         <?php else: ?>
