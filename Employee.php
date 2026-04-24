@@ -1,11 +1,15 @@
+
 <?php
 require_once 'conn.php';
 
 
-<<<<<<< HEAD
+$dsn = 'mysql:host=localhost:9900;dbname=災害;charset=utf8';
 
-=======
->>>>>>> a075cae5c1827c5bb9552fea2d6015aab75e7a56
+
+    $db = new PDO($dsn, "root", "root"); // def.phpの定数を使用することを推奨（"dbuser"等を直接書かない）
+   
+$emp_no = filter_input(INPUT_GET, "id");
+
 function h($value)
 {
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
@@ -73,7 +77,7 @@ if ($result) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="css/app.css">
-    <title>管理ダッシュボード</title>
+    <title>社員詳細</title>
 </head>
 
 <body>
@@ -81,9 +85,12 @@ if ($result) {
 
     <div class="container-fluid">
         <div class="row min-vh-100">
-           
+            <aside class="col-12 col-lg-3 col-xl-2 sidebar-panel p-4 p-lg-3 p-xl-4">
+                <div class="brand-box mb-4">
+                    <p class="brand-kicker mb-1">防災管理システム</p>
+                    <h1 class="brand-title mb-0">社員詳細</h1>
+                </div>
 
-<<<<<<< HEAD
                
                 <div class="row g-4">
                     <div class="col-12 xl-col-8">
@@ -107,10 +114,21 @@ if ($result) {
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php if (!empty($employees)): ?>
-                                            <?php foreach ($employees as $employee): ?>
+                                 <?php 
+                                             $db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+                                             $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+                                             $sql = "SELECT * FROM register";
+                                             $where = "where id=$emp_no";
+                                           
+  ?>
+
+                                        <?php if (!empty($emp_no)): ?>
+                                         
                                                 <tr>
-                                                    <td><?php echo h($employee['id']); ?></td>
+
+                                                    
+
+                                                    <td><?php $stmt = $db->prepare($sql . $where); ?></td>
                                                     <td><?php echo h($employee['name']); ?></td>
                                                     <td><?php echo h($employee['email']); ?></td>
                                                     <td><?php echo h($employee['phone']); ?></td>
@@ -125,70 +143,30 @@ if ($result) {
                                                         <?php endif; ?>
                                                     </td>
 
-                                                     <td>  <td><a class="btn btn-primary" href="Employee.php?id<?= htmlspecialchars($employee['id'] ?? '') ?>">詳細</a></td>
-                                   
+                                                     <td>
+                                                          <a href="Employee.php" class="box"><button class="btn btn-secondary">詳細</button> </a>
                                                           </td> 
                                                 </tr>
-                                            <?php endforeach; ?>
+                                         
                                         <?php else: ?>
-=======
-            <div class="row g-4">
-                <div class="col-12 xl-col-8">
-                    <section class="panel-card h-100">
-                        <div class="panel-head d-flex justify-content-between align-items-center mb-3">
-                            <h5 class="mb-0">社員一覧</h5>
-                            <span class="badge text-bg-light">最新8件</span>
-                        </div>
-                        <div class="table-responsive">
-                            <table class="table table-hover align-middle mb-0">
-                                <thead>
-                                    <tr>
-                                        <th>社員ID</th>
-                                        <th>名前</th>
-                                        <th>メール</th>
-                                        <th>電話</th>
-                                        <th>部署</th>
-                                        <th>役職</th>
-                                        <th>権限</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <?php if (!empty($employees)): ?>
-                                        <?php foreach ($employees as $employee): ?>
->>>>>>> a075cae5c1827c5bb9552fea2d6015aab75e7a56
                                             <tr>
-                                                <td><?php echo h($employee['id']); ?></td>
-                                                <td><?php echo h($employee['name']); ?></td>
-                                                <td><?php echo h($employee['email']); ?></td>
-                                                <td><?php echo h($employee['phone']); ?></td>
-                                                <td><?php echo h($employee['deployment']); ?></td>
-                                                <td><?php echo h($employee['position']); ?></td>
-                                                <td>
-                                                    <?php if ((int) $employee['is_admin'] === 1): ?>
-                                                        <span class="badge rounded-pill text-bg-danger">管理者</span>
-                                                    <?php else: ?>
-                                                        <span class="badge rounded-pill text-bg-secondary">一般</span>
-                                                    <?php endif; ?>
-                                                </td>
+                                                <td colspan="7" class="text-center py-4 text-muted">データがありません。</td>
                                             </tr>
-                                        <?php endforeach; ?>
-                                    <?php else: ?>
-                                        <tr>
-                                            <td colspan="7" class="text-center py-4 text-muted">データがありません。</td>
-                                        </tr>
-                                    <?php endif; ?>
-                                </tbody>
-                            </table>
-                        </div>
-                    </section>
+                                        <?php endif; ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </section>
+                
 
+                   
                 </div>
-                </main>
-            </div>
+            </main>
         </div>
+    </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="js/app.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/app.js"></script>
 </body>
 
 </html>

@@ -185,13 +185,32 @@ $pageTitle = $isEdit ? '社員編集' : '社員登録';
 <body>
     <div class="dashboard-bg"></div>
 
-    <div class="container py-4 py-lg-5">
-        <div class="row justify-content-center">
-            <div class="col-12 col-xl-10">
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            <aside class="col-12 col-lg-3 col-xl-2 sidebar-panel p-4 p-lg-3 p-xl-4">
+                <div class="brand-box mb-4">
+                    <p class="brand-kicker mb-1">防災管理システム</p>
+                    <h1 class="brand-title mb-0"><?php echo h($pageTitle); ?></h1>
+                </div>
+
+                <nav class="nav nav-pills flex-column gap-2 mb-4">
+                    <a href="index.php" class="nav-link"><i class="bi bi-grid-1x2-fill me-2"></i>ダッシュボード</a>
+                    <a href="register_list.php" class="nav-link active"><i class="bi bi-people-fill me-2"></i>社員管理</a>
+                    <a href="report_list.php" class="nav-link"><i class="bi bi-shield-check me-2"></i>安否報告</a>
+                </nav>
+
+                <div class="status-card mt-auto">
+                    <p class="mb-2 small text-uppercase">入力状況</p>
+                    <h6 class="mb-1"><?php echo $isEdit ? '社員情報を編集' : '社員情報を登録'; ?></h6>
+                    <p class="small mb-0 opacity-75">必要な項目を入力して保存してください。</p>
+                </div>
+            </aside>
+
+            <main class="col-12 col-lg-9 col-xl-10 p-4 p-lg-4 p-xl-5 main-panel">
                 <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
                     <div>
                         <p class="text-muted mb-1">災害情報 管理パネル</p>
-                        <h1 class="h3 mb-0 fw-bold"><?php echo h($pageTitle); ?></h1>
+                        <h2 class="mb-0 fw-bold"><?php echo h($pageTitle); ?></h2>
                     </div>
                     <div class="d-flex gap-2">
                         <a href="register_list.php" class="btn btn-outline-secondary">
@@ -211,7 +230,7 @@ $pageTitle = $isEdit ? '社員編集' : '社員登録';
                     </div>
                 <?php endif; ?>
 
-                <div class="panel-card">
+                <section class="panel-card">
                     <form method="post" action="<?php echo h($_SERVER['PHP_SELF']); ?>">
                         <input type="hidden" name="id" value="<?php echo h($employee['id']); ?>">
                         <div class="row g-3">
@@ -270,8 +289,8 @@ $pageTitle = $isEdit ? '社員編集' : '社員登録';
                             </div>
                         </div>
                     </form>
-                </div>
-            </div>
+                </section>
+            </main>
         </div>
     </div>
 

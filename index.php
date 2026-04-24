@@ -1,4 +1,8 @@
 <?php
+
+
+
+
 require_once 'conn.php';
 
 function h($value)
@@ -76,18 +80,22 @@ if ($result) {
 
     <div class="container-fluid">
         <div class="row min-vh-100">
-            <aside class="col-12 col-lg-3 col-xl-2 sidebar-panel p-4 p-lg-3 p-xl-4">
+        <aside class="col-12 col-lg-3 col-xl-2 sidebar-panel p-4 p-lg-3 p-xl-4">
                 <div class="brand-box mb-4">
                     <p class="brand-kicker mb-1">防災管理システム</p>
                     <h1 class="brand-title mb-0">管理者</h1>
                 </div>
-
+ 
                 <nav class="nav nav-pills flex-column gap-2 mb-4">
                     <a href="index.php" class="nav-link active"><i class="bi bi-grid-1x2-fill me-2"></i>ダッシュボード</a>
+
                     <a href="register_list.php" class="nav-link"><i class="bi bi-people-fill me-2"></i>社員管理</a>
                     <a href="report_list.php" class="nav-link"><i class="bi bi-shield-check me-2"></i>安否報告</a>
-                </nav>
+                    <a href="anquan.php" class="nav-link"><i class="bi bi-list-check me-2"></i>安全一覧</a>
+                    
 
+                </nav>
+ 
                 <div class="status-card mt-auto">
                     <p class="mb-2 small text-uppercase">システム状況</p>
                     <h6 class="mb-1">すべて正常に稼働中</h6>
@@ -117,33 +125,39 @@ if ($result) {
 
                 <div class="row g-3 mb-4">
                     <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="metric-card metric-1">
-                            <p class="metric-label">社員総数</p>
-                            <h3 class="metric-value"><?php echo h($stats['total_employees']); ?></h3>
-                            <p class="metric-note mb-0"><i class="bi bi-people me-1"></i>登録済み社員</p>
-                        </div>
+                        <a href="register_list.php" class="text-decoration-none">
+                            <div class="metric-card metric-1">
+                                <p class="metric-label">社員総数</p>
+                                <h3 class="metric-value"><?php echo h($stats['total_employees']); ?></h3>
+                                <p class="metric-note mb-0"><i class="bi bi-people me-1"></i>登録済み社員</p>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="metric-card metric-2">
-                            <p class="metric-label">管理者数</p>
-                            <h3 class="metric-value"><?php echo h($stats['admin_count']); ?></h3>
-                            <p class="metric-note mb-0"><i class="bi bi-person-badge me-1"></i>権限アカウント</p>
-                        </div>
+                        <a href="#" class="text-decoration-none">
+                            <div class="metric-card metric-2">
+                                <p class="metric-label">管理者数</p>
+                                <h3 class="metric-value"><?php echo h($stats['admin_count']); ?></h3>
+                                <p class="metric-note mb-0"><i class="bi bi-person-badge me-1"></i>権限アカウント</p>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-3">
-                        <div class="metric-card metric-3">
-                            <p class="metric-label">安全報告数</p>
-                            <h3 class="metric-value"><?php echo h($stats['safe_reports']); ?></h3>
-                            <p class="metric-note mb-0"><i class="bi bi-check2-circle me-1"></i>安全確認済み</p>
-                        </div>
+                        <a href="report_list.php?status=safe" class="text-decoration-none">
+                            <div class="metric-card metric-3">
+                                <p class="metric-label">安全報告数</p>
+                                <h3 class="metric-value"><?php echo h($stats['safe_reports']); ?></h3>
+                                <p class="metric-note mb-0"><i class="bi bi-check2-circle me-1"></i>安全確認済み</p>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-12 col-sm-6 col-xl-3">
                         <a href="report_list.php?status=unsafe" class="text-decoration-none">
                             <div class="metric-card metric-4">
-                            <p class="metric-label">要対応報告数</p>
-                            <h3 class="metric-value"><?php echo h($stats['unsafe_reports']); ?></h3>
-                            <p class="metric-note mb-0"><i class="bi bi-exclamation-triangle me-1"></i>対応が必要</p>
-                        </div>
+                                <p class="metric-label">要対応報告数</p>
+                                <h3 class="metric-value"><?php echo h($stats['unsafe_reports']); ?></h3>
+                                <p class="metric-note mb-0"><i class="bi bi-exclamation-triangle me-1"></i>対応が必要</p>
+                            </div>
                         </a>
                     </div>
                 </div>
@@ -216,11 +230,11 @@ if ($result) {
                                                     <span class="badge rounded-pill text-bg-warning">安全じゃない</span>
                                                 <?php endif; ?>
                                             </div>
-                                           
+
                                             <p class="small mb-1 text-muted">社員番号: <?php echo h($report['emp_no']); ?> / <?php echo h($report['deployment']); ?></p>
                                             <p class="small mb-0 text-muted"><?php echo h($report['created_at']); ?></p>
 
-                                             <div class="my-1  d-flex justify-content-end ">
+                                            <div class="my-1  d-flex justify-content-end ">
                                                 <a href="report_detail.php?emp_no=<?php echo h($report['emp_no']); ?>" class="badge rounded-pill py-1 px-3 text-bg-info text-white border-0 text-decoration-none">詳しく</a>
                                             </div>
                                         </div>

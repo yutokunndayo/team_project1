@@ -1,2 +1,2 @@
 <?php
-require_once __DIR__ . '/register_lish.php';
+require_once 'register_lish.php';

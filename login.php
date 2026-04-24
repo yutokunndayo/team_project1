@@ -13,38 +13,45 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $error = "メールアドレスとパスワードを入力してください。";
     } else {
         // ユーザー検索
-        $sql = "SELECT id, name, email, password FROM register WHERE email = ? LIMIT 1";
+        $sql = "SELECT id, name, email, is_admin, password FROM register WHERE email = ? LIMIT 1";
 
         // プリペアドステートメント
         $stmt = mysqli_prepare($conn, $sql);
 
 
+
         if ($stmt) {
-      mysqli_stmt_bind_param($stmt, "s", $email);
-      mysqli_stmt_execute($stmt);
-      $result = mysqli_stmt_get_result($stmt);
-      $user = mysqli_fetch_assoc($result);
-      mysqli_stmt_close($stmt);
- 
-      $isValidPassword = false;
-      if ($user) {
- 
-        $storedPassword = (string) $user["password"];
-        $isValidPassword = ($password === $storedPassword) || password_verify($password, $storedPassword);
-      }
- 
-      if ($isValidPassword) {
-        $_SESSION["id"] = $user["id"];
-        $_SESSION["name"] = $user["name"];
-        header("Location: report.php");
-        exit();
-      }
- 
-      $error = "メールアドレスまたはパスワードが正しくありません。";
-    } else {
-      $error = "ログイン処理に失敗しました。もう一度お試しください。";
+            mysqli_stmt_bind_param($stmt, "s", $email);
+            mysqli_stmt_execute($stmt);
+            $result = mysqli_stmt_get_result($stmt);
+            $user = mysqli_fetch_assoc($result);
+            mysqli_stmt_close($stmt);
+
+            $isValidPassword = false;
+            if ($user) {
+
+                $storedPassword = (string) $user["password"];
+                $isValidPassword = ($password === $storedPassword) || password_verify($password, $storedPassword);
+            }
+
+            if ($isValidPassword) {
+                $_SESSION["id"] = $user["id"];
+                $_SESSION["email"] = $user["email"];
+                $_SESSION["is_admin"] = (int) ($user["is_admin"] ?? 0); // 管理者フラグをセッションに保存
+
+                if ($_SESSION["is_admin"] === 1) {
+                    header("Location: report.php");
+                } else {
+                    header("Location: report.php");
+                }
+                exit();
+            }
+
+            $error = "メールアドレスまたはパスワードが正しくありません。";
+        } else {
+            $error = "ログイン処理に失敗しました。もう一度お試しください。";
+        }
     }
-  }
 }
 
 ?>
