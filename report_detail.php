@@ -1,6 +1,7 @@
 <?php
 require_once 'conn.php';
 
+
 function h($value)
 {
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
@@ -41,9 +42,14 @@ if ($recordId === '' || !ctype_digit($recordId)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>報告詳細</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="css/app.css">
     <style>
         body {
-            background: linear-gradient(180deg, #f8fbff 0%, #eef3f8 100%);
+            background: transparent;
         }
 
         .detail-card {
@@ -81,54 +87,67 @@ if ($recordId === '' || !ctype_digit($recordId)) {
 </head>
 
 <body>
-    <div class="container py-5">
-        <div class="d-flex justify-content-between align-items-center mb-3">
-            <h1 class="h4 mb-0 detail-title">報告詳細</h1>
-            <a href="index.php" class="btn btn-outline-secondary btn-sm">ダッシュボードへ戻る</a>
-        </div>
+    <div class="dashboard-bg"></div>
 
-        <?php if ($queryError !== ''): ?>
-            <div class="alert alert-danger" role="alert"><?php echo h($queryError); ?></div>
-        <?php endif; ?>
-
-        <?php if ($detail): ?>
-            <div class="card detail-card">
-                <div class="card-body p-4 p-md-5">
-                    <div class="row g-4 mb-2">
-                        <div class="col-12 col-md-6">
-                            <div class="label-box">社員番号</div>
-                            <div class="value-box"><?php echo h($detail['emp_no']); ?></div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="label-box">名前</div>
-                            <div class="value-box"><?php echo h($detail['name']); ?></div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="label-box">部署</div>
-                            <div class="value-box"><?php echo h($detail['deployment']); ?></div>
-                        </div>
-                        <div class="col-12 col-md-6">
-                            <div class="label-box">状況</div>
-                            <div class="value-box">
-                                <?php if ($detail['data'] === '安全'): ?>
-                                    <span class="badge text-bg-success">安全</span>
-                                <?php else: ?>
-                                    <span class="badge text-bg-warning">安全じゃない</span>
-                                <?php endif; ?>
-                            </div>
-                        </div>
-                        <div class="col-12">
-                            <div class="label-box">コメント</div>
-                            <div class="comment-box"><?php echo h($detail['comment']); ?></div>
-                        </div>
-                        <div class="col-12">
-                            <div class="label-box">作成日時</div>
-                            <div class="value-box"><?php echo h($detail['created_at']); ?></div>
-                        </div>
+    <div class="container-fluid">
+        <div class="row min-vh-100">
+            
+            <main class="col-12 col-lg-9 col-xl-10 p-4 p-lg-4 p-xl-5 main-panel">
+                <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+                    <div>
+                        <p class="text-muted mb-1">災害情報 管理パネル</p>
+                        <h2 class="mb-0 fw-bold">報告詳細</h2>
+                    </div>
+                    <div class="d-flex gap-2">
+                        <a href="report_list.php" class="btn btn-outline-secondary btn-sm">一覧へ戻る</a>
+                        <a href="index.php" class="btn btn-outline-primary btn-sm">ダッシュボードへ戻る</a>
                     </div>
                 </div>
-            </div>
-        <?php endif; ?>
+
+                <?php if ($queryError !== ''): ?>
+                    <div class="alert alert-danger" role="alert"><?php echo h($queryError); ?></div>
+                <?php endif; ?>
+
+                <?php if ($detail): ?>
+                    <div class="card detail-card">
+                        <div class="card-body p-4 p-md-5">
+                            <div class="row g-4 mb-2">
+                                <div class="col-12 col-md-6">
+                                    <div class="label-box">社員番号</div>
+                                    <div class="value-box"><?php echo h($detail['emp_no']); ?></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="label-box">名前</div>
+                                    <div class="value-box"><?php echo h($detail['name']); ?></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="label-box">部署</div>
+                                    <div class="value-box"><?php echo h($detail['deployment']); ?></div>
+                                </div>
+                                <div class="col-12 col-md-6">
+                                    <div class="label-box">状況</div>
+                                    <div class="value-box">
+                                        <?php if ($detail['data'] === '安全'): ?>
+                                            <span class="badge text-bg-success">安全</span>
+                                        <?php else: ?>
+                                            <span class="badge text-bg-warning">安全じゃない</span>
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="label-box">コメント</div>
+                                    <div class="comment-box"><?php echo h($detail['comment']); ?></div>
+                                </div>
+                                <div class="col-12">
+                                    <div class="label-box">作成日時</div>
+                                    <div class="value-box"><?php echo h($detail['created_at']); ?></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <?php endif; ?>
+            </main>
+        </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
 </body>
