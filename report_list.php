@@ -31,13 +31,19 @@ function h($value)
     return htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8');
 }
 
-$status = $_GET['status'] ?? '';
+$status = trim((string) ($_GET['status'] ?? $_GET['data'] ?? ''));
 $whereClause = '';
 $pageTitle = '安否報告一覧';
+$panelTitle = '最新の報告';
 
-if ($status === 'unsafe') {
+if ($status === 'safe') {
+    $whereClause = "WHERE `data` = '安全'";
+    $pageTitle = '安全報告一覧';
+    $panelTitle = '安全の報告';
+} elseif ($status === 'unsafe') {
     $whereClause = "WHERE `data` = '安全じゃない'";
     $pageTitle = '要対応報告一覧';
+    $panelTitle = '要対応の報告';
 }
 
 $result = $conn->query("SELECT emp_no, name, deployment, data, created_at FROM report {$whereClause} ORDER BY created_at DESC LIMIT 5");
@@ -115,7 +121,7 @@ if ($result) {
 
                 <section class="panel-card">
                     <div class="panel-head d-flex justify-content-between align-items-center mb-3">
-                        <h5 class="mb-0"><?php echo $status === 'unsafe' ? '要対応の報告' : '最新の報告'; ?></h5>
+                        <h5 class="mb-0"><?php echo h($panelTitle); ?></h5>
                         <span class="badge text-bg-light"><?php echo h(count($recentReports)); ?>件</span>
                     </div>
 

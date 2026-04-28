@@ -91,7 +91,7 @@ if ($result) {
 
                     <a href="register_list.php" class="nav-link"><i class="bi bi-people-fill me-2"></i>社員管理</a>
                     <a href="report_list.php" class="nav-link"><i class="bi bi-shield-check me-2"></i>安否報告</a>
-                    <a href="anquan.php" class="nav-link"><i class="bi bi-list-check me-2"></i>安全一覧</a>
+                    <!-- <a href="anquan.php" class="nav-link"><i class="bi bi-list-check me-2"></i>安全一覧</a> -->
                     
 
                 </nav>

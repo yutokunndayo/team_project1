@@ -144,12 +144,12 @@ if ($recordId === '' || !ctype_digit($recordId)) {
                         <p class="text-muted mb-1">災害情報 管理パネル</p>
                         <h2 class="mb-0 fw-bold">報告詳細</h2>
                     </div>
-                    <?php if ($isAdmin): ?>
-                        <div class="d-flex gap-2">
-                            <a href="report_list.php" class="btn btn-outline-secondary btn-sm">一覧へ戻る</a>
+                    <div class="d-flex gap-2">
+                        <a href="report_list.php" class="btn btn-outline-secondary btn-sm">一覧へ戻る</a>
+                        <?php if ($isAdmin): ?>
                             <a href="index.php" class="btn btn-outline-primary btn-sm">ダッシュボードへ戻る</a>
-                        </div>
-                    <?php endif; ?>
+                        <?php endif; ?>
+                    </div>
                 </div>
 
                 <?php if ($queryError !== ''): ?>
