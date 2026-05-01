@@ -71,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
 
+
 <body class="bg-light">
     <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center py-5">
         <div class="row justify-content-center w-100">
